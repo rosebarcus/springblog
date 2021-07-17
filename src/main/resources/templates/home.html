@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Welcome</title>
+    <th:block th:include="partials/styles.html :: styles"></th:block>
+    <!--Could also use the syntax to add a fragment to the document
+    <th:block th:replace="partials/styles.html :: styles"></th:block>-->
 </head>
 <body>
 <h1>This is the landing page!</h1>

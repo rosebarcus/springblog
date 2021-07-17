@@ -6,8 +6,16 @@
 </head>
 <body>
 <ul th:each="park : ${parks}">
+ <!--   will not show parks (see lec file)
+    <th:block th:if="${parks.isEmpty()}">
+        <li th:text="${park.name}"></li>
+    </th:block>
+</ul>
+    will show parks:-->
+<ul th:each="park : ${parks}">
+    <th:block th:unless="${parks.isEmpty()}">
     <li th:text="${park.name}"></li>
-
+    </th:block>
 </ul>
 </body>
 </html>
