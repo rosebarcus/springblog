@@ -18,6 +18,14 @@ public class HelloController {
         return "hello";
     }
 
+    @GetMapping("/join")
+    public String showJoinForm() {
+        return "join";
+    }
+
+ /*   @PostMapping("/join")
+    public*/
+
     @GetMapping("/number/{num}")
     @ResponseBody
     public int displayNumber(@PathVariable int num) {
