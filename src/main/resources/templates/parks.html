@@ -6,15 +6,13 @@
 </head>
 <body>
 <ul th:each="park : ${parks}">
- <!--   will not show parks (see lec file)
-    <th:block th:if="${parks.isEmpty()}">
-        <li th:text="${park.name}"></li>
-    </th:block>
-</ul>
-    will show parks:-->
-<ul th:each="park : ${parks}">
+    <!--    Will not show parks because the parks list is not empty-->
+    <!--    <th:block th:if="${parks.isEmpty()}">-->
+    <!--        <li th:text="${park.name}"></li>-->
+    <!--    </th:block>-->
+    <!--    Will show parks because the parks list does in fact contain Park objects-->
     <th:block th:unless="${parks.isEmpty()}">
-    <li th:text="${park.name}"></li>
+        <li th:text="${park.name}"></li>
     </th:block>
 </ul>
 </body>
