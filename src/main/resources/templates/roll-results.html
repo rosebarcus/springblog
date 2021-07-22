@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/header.html :: header ('Checking your guess')">
+    <meta charset="UTF-8"/>
+    <title>Checking your guess</title>
+</head>
+<body>
+    <h1>Here's the deal...</h1>
+    <p>You guessed: <span th:text="${n}"></span></p>
+    <p>The die rolled: <span th:text="${rollDice}"></span></p>
+    <p th:if="${check}">You guessed correctly!</p>
+    <p th:if="${!check}">Sorry, that wasn't the right guess!</p>
+
+        <footer th:replace="partials/footer.html :: footer"></footer>
+
+</body>
+</html>

@@ -15,19 +15,11 @@ public class RollDiceController {
     @GetMapping("/roll-dice/{n}")
     public String viewResult(@PathVariable int n, Model model) {
 
-        int rollDice = (int) (Math.random() * 6 + 1);
-        String message;
-
-        if (rollDice == n) {
-            message = "You guessed it!";
-        } else {
-            message = "Sorry, that wasn't the number. Try again!";
-        }
-
+        int rollDice = (int) Math.floor((Math.random() * 6) + 1);
+        boolean check = rollDice == n;
         model.addAttribute("n", n);
         model.addAttribute("rollDice", rollDice);
-        model.addAttribute("message", message);
-
+        model.addAttribute("check", check);
         return "roll-results";
     }
 }

@@ -1,32 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head th:include="partials/head :: header-links">
+<head th:replace="partials/header.html :: header(Title)">
     <title>Roll Dice</title>
 </head>
 <body>
-<nav th:replace="partials/navbar :: navbar"></nav>
+<nav th:replace="partials/navbar.html :: navbar"></nav>
 
 
-
-<h3>Roll Dice</h3>
-
-<!--  This form is mapped to "/" and gets handled with a PostMapping  -->
-<form action="/roll-dice" method="GET">
-    <!--   The form submits a dice parameter that gets used in PostMapping   -->
-    <input type="text" name="dice" id="dice">
-    <button>Roll</button>
-</form>
-
+<h3>Dice Guessing Game</h3>
 
 <h1>Can you guess the dice roll?</h1>
-<ul>
-    <a th:href="@{/roll-dice/1}"><li>1</li></a>
-    <a th:href="@{/roll-dice/2}"><li>2</li></a>
-    <a th:href="@{/roll-dice/3}"><li>3</li></a>
-    <a th:href="@{/roll-dice/4}"><li>4</li></a>
-    <a th:href="@{/roll-dice/5}"><li>5</li></a>
-    <a th:href="@{/roll-dice/6}"><li>6</li></a>
-</ul>
+
+
+<a href="/roll-dice/1">1</a><br>
+<a href="/roll-dice/2">2</a><br>
+<a href="/roll-dice/3">3</a><br>
+<a href="/roll-dice/4">4</a><br>
+<a href="/roll-dice/5">5</a><br>
+<a href="/roll-dice/6">6</a><br>
 
 
 
