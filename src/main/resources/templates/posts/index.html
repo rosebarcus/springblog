@@ -7,7 +7,7 @@
 <body>
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head th:include="partials/head :: header-links">
+<head th:include="partials/header.html :: header">
     <title>Viewing All Posts</title>
 </head>
 <body>
@@ -18,10 +18,8 @@
 
     <div class="row mt-5">
         <div class="col-12" th:each="post : ${posts}">
-            <h2 th:text="${post.title}"></h2>
-            <p th:text="${post.body}"></p>
-            <p>Posted By: <span th:text="${post.author.email}"></span></p>
-            <a class="btn btn-primary" th:href="@{/posts/{id}/edit(id=${post.id})}" role="button">Edit</a>
+            <p th:text="${posts.title}"></p>
+            <p th:text="${posts.body}"></p>
             <hr>
         </div>
     </div>
