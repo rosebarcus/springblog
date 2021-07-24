@@ -1,11 +1,14 @@
 package com.codeup.springblog.controllers;
 
-import com.codeup.springblog.models.Ad;
+import com.codeup.neptunespringblog.models.Ad;
+import com.codeup.neptunespringblog.models.AdRepository;
+import com.codeup.neptunespringblog.models.Post;
 import com.codeup.springblog.models.AdRepository;
-import com.codeup.springblog.models.Post;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 public class AdController {
@@ -21,18 +24,16 @@ public class AdController {
         return "ads/index";
     }
 
-/*
     @GetMapping("/ads/{n}")
     public String viewOne(@PathVariable long n, Model model) {
         Ad ad = adDao.findById(n);
-        model.addAttribute("ad", adDao.findAdByID(n));
+        model.addAttribute("ad", ad);
         return "ads/show";
     }
-*/
 
     @GetMapping("/ads/first/{title}")
     public String viewOneByTitle(@PathVariable String title, Model model) {
-        Ad ad = adDao.findFirstByTitle(title);
+        Ad ad = adDao.findByTitle(title);
         model.addAttribute("ad", ad);
         return "ads/show";
     }

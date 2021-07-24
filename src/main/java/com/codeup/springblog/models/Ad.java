@@ -16,7 +16,22 @@ public class Ad {
     @Column(nullable = false)
     private String description;
 
+    @OneToOne
+    private AdImage adImage;
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
     public Ad() {}
+
+    public Ad(long id, String title, String description, AdImage adImage, User user) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.adImage = adImage;
+        this.user = user;
+    }
 
     public long getId() {
         return id;
@@ -42,9 +57,13 @@ public class Ad {
         this.description = description;
     }
 
-    public Ad(long id, String title, String description) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
+    public User getUser() {
+        return user;
     }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }
+
