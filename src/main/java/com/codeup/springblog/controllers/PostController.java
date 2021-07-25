@@ -17,65 +17,52 @@ public class PostController {
         this.postDao = postDao;
     }
 
-    //all posts
-    @GetMapping(path = "/posts")
-    public String index(Model model) {
+    @GetMapping("/posts")
+    public String viewPosts(Model model) {
         model.addAttribute("posts", postDao.findAll());
         return "posts/index";
     }
 
     @GetMapping("/posts/{id}")
     public String singlePost(@PathVariable long id, Model model) {
-       model.addAttribute("post", postDao.getById(id));
+        model.addAttribute("post", postDao.getById(id));
         return "posts/show";
     }
 
-    @PostMapping("/posts/edit/{id}")
-    public String editPost(@PathVariable long id, Model model) {
-        Post post = postDao.getById(id);
-        post.setTitle();
-        return "redirect:/posts/" + id;
-
-    }
-
     @GetMapping("/posts/edit/{id}")
-    public String editPost(@PathVariable long id, Model model) {
+    public String editForm(@PathVariable long id, Model model) {
         model.addAttribute("post", postDao.getById(id));
         return "posts/edit";
     }
 
-
-    @PostMapping("/posts/delete/{id}")
-    public String deletePost(@PathVariable long id, @RequestParam String title, @RequestParam String body,
-                             Model model) {
-        Post post = postDao
-
-        postDao.delete(postDao.getById(id));
-        return "redirect:/posts" + id;
-    }
-
-    @PostMapping("/posts/save/edit/{id}")
-    public String editOne(Model model,@PathVariable long id, @RequestParam(name = "title") String title, @RequestParam(name = "body") String body){
+    @PostMapping("/posts/edit/{id}")
+    public String editPost(@PathVariable long id, @RequestParam String title, @RequestParam String body) {
         Post post = postDao.getById(id);
         post.setTitle(title);
         post.setBody(body);
         postDao.save(post);
-        return "redirect:/posts/" + post.getId();
+        return "redirect:/posts/" + id;
     }
 
-    @RequestMapping(path = "/posts/create", method = RequestMethod.GET)
+    @PostMapping("/posts/delete/{id}")
+    public String deletePost(@PathVariable long id) {
+        postDao.delete(postDao.getById(id));
+        return "redirect:/posts";
+    }
+
+    // When you visit the URL you will see the form to create a post.
+    @GetMapping("/posts/create")
     @ResponseBody
     public String createForm() {
-        return "View form to create a post";
+        return "View form to create a post.";
     }
 
-    @RequestMapping(path = "/post/create", method = RequestMethod.POST)
+    // When you submit the form on the /posts/create page,
+    // the information will be posted to the same URL
+//    @RequestMapping(path = "/posts/create", method = RequestMethod.POST)
+    @PostMapping("/posts/create")
     @ResponseBody
-    public String createPost( ){
-        return "Create a new post";
+    public String createPost() {
+        return "Creates new post.";
     }
-
-
-
-
 }

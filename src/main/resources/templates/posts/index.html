@@ -7,7 +7,7 @@
 <body>
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head th:include="partials/header.html :: header">
+<head th:replace="partials/header :: header">
     <title>Viewing All Posts</title>
 </head>
 <body>
@@ -18,8 +18,8 @@
 
     <div class="row mt-5">
         <div class="col-12" th:each="post : ${posts}">
-            <p th:text="${posts.title}"></p>
-            <p th:text="${posts.body}"></p>
+            <p th:text="${post.title}"></p>
+            <p th:text="${post.body}"></p>
             <hr>
         </div>
     </div>

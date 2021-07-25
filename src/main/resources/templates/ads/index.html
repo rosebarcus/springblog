@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/header :: header ('Viewing All Ads')"></head>
+<body class="main">
+<nav th:replace="partials/navbar :: navbar"></nav>
+<header></header>
+<main class="container">
+    <div class="card head-card">
+        <div class="card-image">
+            <!--todo add images to img folder for header and cards-->
+            <img src="../static/img/big-bar.png" th:src="@{/img/}" alt="" />
+        </div>
+        <div class="card-content">
+            <h4 class="card-title">Viewing All Ads</h4>
+            <p>Click any ad to view all of its content.</p>
+        </div>
+    </div>
+    <div th:each="ad : ${ads}">
+        <div class="card offwhite-body">
+            <div class="card-image">
+                <img src="../static/img/big-bar.png" th:src="@{/img/}" alt="" />
+            </div>
+            <div class="card-content preview-post">
+                <h4 class="card-title" th:text="${ad.title}"></h4>
+                <p th:text="${ad.description}"></p>
+                <p style="display: flex; justify-content: flex-end; color: maroon" th:text="${ad.user.username}"></p>
+            </div>
+            <div class="small-space"></div>
+        </div>
+    </div>
+</main>
+<footer th:replace="partials/footer :: footer"></footer>
+</body>
+</html>
