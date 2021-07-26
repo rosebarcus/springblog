@@ -1,9 +1,8 @@
-TRUNCATE springblog_db.users;
-TRUNCATE springblog_db.ads;
-TRUNCATE springblog_db.posts;
+USE springblog_db;
 
 INSERT INTO springblog_db.users (username, email, password)
 VALUES ('admin', 'admin@email.com', 'password');
+
 
 INSERT INTO springblog_db.ads (description, title, user_id)
 VALUES ('Lorem ipsum dolor sit amet, ex pericula persequeris eam, quo quem saperet cu. Ne epicurei periculis nec. Nostrud fastidii eu vim.',
@@ -34,3 +33,9 @@ VALUES ('lorem'), ('ipsum'), ('dolor'), ('sit'), ('amet');
 
 INSERT INTO springblog_db.ads_categories (ad_id, category_id)
 VALUES (1,1), (1,2), (2,2), (3,3), (4,4), (5,5);
+
+UPDATE posts SET user_id = 1 WHERE id = 1;
+UPDATE posts SET user_id = 1 WHERE id = 2;
+UPDATE posts SET user_id = 1 WHERE id = 3;
+UPDATE posts SET user_id = 1 WHERE id = 4;
+UPDATE posts SET user_id = 1 WHERE id = 5;

@@ -2,6 +2,8 @@ package com.codeup.springblog.controllers;
 
 import com.codeup.springblog.models.Post;
 import com.codeup.springblog.models.PostRepository;
+import com.codeup.springblog.models.User;
+import com.codeup.springblog.models.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +14,11 @@ import java.util.List;
 @Controller
 public class PostController {
     private final PostRepository postDao;
+    private final UserRepository usersDao;
 
-    public PostController(PostRepository postDao) {
+    public PostController(PostRepository postDao, UserRepository usersDao) {
         this.postDao = postDao;
+        this.usersDao = usersDao;
     }
 
     @GetMapping("/posts")
@@ -61,8 +65,10 @@ public class PostController {
     // the information will be posted to the same URL
 //    @RequestMapping(path = "/posts/create", method = RequestMethod.POST)
     @PostMapping("/posts/create")
-    @ResponseBody
-    public String createPost() {
+    public String createPost(@RequestParam String title, @RequestParam String body) {
+        User user = usersDao.getById(1L);
+        Post post = new Post(title, body, user);
+        postDao.save(post);
         return "Creates new post.";
     }
 }

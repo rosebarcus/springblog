@@ -2,7 +2,6 @@ package com.codeup.springblog.models;
 
 import javax.persistence.*;
 import java.util.List;
-
 @Entity
 @Table(name="categories")
 public class Category {
@@ -16,8 +15,7 @@ public class Category {
     @ManyToMany(mappedBy = "categories")
     private List<Ad> ads;
 
-    public Category() {
-    }
+    public Category() {}
 
     public Category(long id, String name, List<Ad> ads) {
         this.id = id;
@@ -49,4 +47,5 @@ public class Category {
         this.ads = ads;
     }
 }
+
 

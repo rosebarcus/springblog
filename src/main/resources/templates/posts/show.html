@@ -1,29 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Viewing Post</title>
-</head>
-<nav th:replace= "partials/navbar :: navbar"></nav>
-
-<body>
-<!--todo need to finish the form here, come back to the lecture notes from david's walk-through-->
-<h1 th:text="${post.title}"></h1>
-<h3 th:text="${post.body}"></h3>
-<a th:href="@{posts/${post.id}/edit}">Edit Post</a>
-<form th:action="@{/posts/delete/{id}(id= ${post.id})}" th:method="POST">
-    <button>Delete</button>
-</form>
-
-<!--whys this red? does it matter? -->
-<!--<span th:text="${user.email}"></span>-->
-
-
-
-
+<head th:replace="partials/header :: head ('Viewing Post')" />
+<body class="main">
+<nav th:replace="partials/navbar :: navbar" />
+<header></header>
+<main class="container">
+    <div class="card offwhite-body">
+        <div class="card-content">
+            <h3 class="card-title" th:text="${post.title}" />
+            <p th:text="${post.body}" class="i-like-paragraphs" />
+            <p th:text="${post.user.email}"></p>
+            <br />
+        </div>
+    </div>
+</main>
+<footer th:replace="partials/footer :: footer" />
 </body>
-
-
-<footer th:replace= "partials/partials :: footer"></footer>
 </html>
