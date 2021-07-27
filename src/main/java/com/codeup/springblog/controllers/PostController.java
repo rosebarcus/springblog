@@ -4,6 +4,7 @@ import com.codeup.springblog.models.Post;
 import com.codeup.springblog.models.PostRepository;
 import com.codeup.springblog.models.User;
 import com.codeup.springblog.models.UserRepository;
+import com.codeup.springblog.services.EmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +16,12 @@ import java.util.List;
 public class PostController {
     private final PostRepository postDao;
     private final UserRepository usersDao;
+    private final EmailService emailSVC;
 
-    public PostController(PostRepository postDao, UserRepository usersDao) {
+    public PostController(PostRepository postDao, UserRepository usersDao, EmailService emailSVC) {
         this.postDao = postDao;
         this.usersDao = usersDao;
+        this.emailSVC = emailSVC;
     }
 
     @GetMapping("/posts")
@@ -33,19 +36,15 @@ public class PostController {
         return "posts/show";
     }
 
-    @GetMapping("/posts/edit/{id}")
+    @GetMapping("/posts/{id}/edit")
     public String editForm(@PathVariable long id, Model model) {
         model.addAttribute("post", postDao.getById(id));
-        return "posts/edit";
+        return "posts/create";
     }
 
-    @PostMapping("/posts/edit/{id}")
-    public String editPost(@PathVariable long id, @RequestParam String title, @RequestParam String body) {
-        Post post = postDao.getById(id);
-        post.setTitle(title);
-        post.setBody(body);
-        postDao.save(post);
-        return "redirect:/posts/" + id;
+    @PostMapping("/posts/{id}/edit")
+    public String editPost(@PathVariable long id, @ModelAttribute Post post) {
+        return createPost(post);
     }
 
     @PostMapping("/posts/delete/{id}")
@@ -56,7 +55,6 @@ public class PostController {
 
     // When you visit the URL you will see the form to create a post.
     @GetMapping("/posts/create")
-    @ResponseBody
     public String createPostForm(Model model) {
         model.addAttribute("post", new Post());
         return "posts/create";
@@ -68,6 +66,8 @@ public class PostController {
     @PostMapping("posts/create")
     public String createPost(@ModelAttribute Post post) {
         post.setUser(usersDao.getById(1L));
+        emailSVC.prepareAndSend(post, "hello, this is a test.",
+                "Yup you tested it.");
         postDao.save(post);
         return "redirect:/posts";
     }

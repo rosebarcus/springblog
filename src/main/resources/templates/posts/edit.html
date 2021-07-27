@@ -8,10 +8,12 @@
     <div class="card offwhite-body">
         <div class="card-content">
             <h1>Edit post</h1>
-            <form method="post" th:action="@{/posts/save/edit/{id}(id=${post.id})}">
-                <input style="width: 25em"  class="card-title" th:value="${post.title}" name="title" />
+            <form method="post" th:action="@{/posts/{id}/edit (id=${post.id})}" th:object="${post}">
+                <input style="width: 25em"  class="card-title" th:value="${post.title}" name="title"
+                       th:field="*{title}"/>
                 <br>
-                <textarea style="width: 25em; height: 12em" th:text="${post.body}" class="i-like-paragraphs" name="body"></textarea>
+                <textarea style="width: 25em; height: 12em" th:text="${post.body}" class="i-like-paragraphs"
+                          name="body" th:object="*{body}"></textarea>
                 <br>
                 <button type="submit" name="save">Save changes</button>
             </form>
