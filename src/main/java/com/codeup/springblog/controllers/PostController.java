@@ -57,17 +57,17 @@ public class PostController {
     // When you visit the URL you will see the form to create a post.
     @GetMapping("/posts/create")
     @ResponseBody
-    public String createForm() {
-        return "/posts/create/";
+    public String createPostForm(Model model) {
+        model.addAttribute("post", new Post());
+        return "posts/create";
     }
 
     // When you submit the form on the /posts/create page,
     // the information will be posted to the same URL
 //    @RequestMapping(path = "/posts/create", method = RequestMethod.POST)
     @PostMapping("posts/create")
-    public String createPost(@RequestParam String title, @RequestParam String body) {
-        User user = usersDao.getById(1L);
-        Post post = new Post(title, body, user);
+    public String createPost(@ModelAttribute Post post) {
+        post.setUser(usersDao.getById(1L));
         postDao.save(post);
         return "redirect:/posts";
     }
