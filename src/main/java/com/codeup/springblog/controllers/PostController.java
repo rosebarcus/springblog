@@ -1,16 +1,14 @@
 package com.codeup.springblog.controllers;
 
 import com.codeup.springblog.models.Post;
-import com.codeup.springblog.models.PostRepository;
 import com.codeup.springblog.models.User;
-import com.codeup.springblog.models.UserRepository;
+import com.codeup.springblog.repositories.PostRepository;
+import com.codeup.springblog.repositories.UserRepository;
 import com.codeup.springblog.services.EmailService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class PostController {
@@ -38,18 +36,31 @@ public class PostController {
 
     @GetMapping("/posts/{id}/edit")
     public String editForm(@PathVariable long id, Model model) {
-        model.addAttribute("post", postDao.getById(id));
-        return "posts/create";
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Post post = postDao.getById(id);
+        if (currentUser.getId() == post.getUser().getId()) {
+            model.addAttribute("post", post);
+            return "posts/edit";
+        } else {
+            return "redirect:/posts/" + id;
+        }
     }
 
     @PostMapping("/posts/{id}/edit")
     public String editPost(@PathVariable long id, @ModelAttribute Post post) {
-        return createPost(post);
+        post.setUser(usersDao.getById(1L));
+        postDao.save(post);
+        return "redirect:/posts/" + id;
     }
+
 
     @PostMapping("/posts/delete/{id}")
     public String deletePost(@PathVariable long id) {
-        postDao.delete(postDao.getById(id));
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Post post = postDao.getById(id);
+        if (currentUser.getId() == post.getUser().getId()) {
+            postDao.delete(post);
+        }
         return "redirect:/posts";
     }
 
