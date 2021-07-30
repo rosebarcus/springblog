@@ -48,8 +48,13 @@ public class PostController {
 
     @PostMapping("/posts/{id}/edit")
     public String editPost(@PathVariable long id, @ModelAttribute Post post) {
-        post.setUser(usersDao.getById(1L));
-        postDao.save(post);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Post postFromDB = postDao.getById(id);
+
+        if (user.getId() == postFromDB.getUser().getId()) {
+            post.setUser(user);
+            postDao.save(post);
+        }
         return "redirect:/posts/" + id;
     }
 
@@ -74,6 +79,8 @@ public class PostController {
     // When you submit the form on the /posts/create page,
     // the information will be posted to the same URL
 //    @RequestMapping(path = "/posts/create", method = RequestMethod.POST)
+
+    /*todo: make sure to copy david's @PostMapping from his exercise walkthrough for security and authentication*/
     @PostMapping("posts/create")
     public String createPost(@ModelAttribute Post post) {
         post.setUser(usersDao.getById(1L));
