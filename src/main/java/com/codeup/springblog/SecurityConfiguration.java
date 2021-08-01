@@ -45,11 +45,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(
+                        "/posts/create",
+                        "/ads/create")
+                .authenticated()
+                .and()
+                .authorizeRequests()
+                .antMatchers(
                         "/",
                         "/ads",
-                        "/ads/{id}",
                         "/posts",
                         "/posts/{id}",
+                        "/ads/{id}",
                         "/register",
                         "/js/**", // had to add this to not restrict scripts
                         "/css/**", // had to add this to not restrict stylesheets
