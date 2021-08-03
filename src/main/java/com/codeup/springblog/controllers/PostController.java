@@ -80,13 +80,12 @@ public class PostController {
     // the information will be posted to the same URL
 //    @RequestMapping(path = "/posts/create", method = RequestMethod.POST)
 
-    /*todo: make sure to copy david's @PostMapping from his exercise walkthrough for security and authentication*/
-    @PostMapping("posts/create")
+    @PostMapping("/posts/create")
     public String createPost(@ModelAttribute Post post) {
-        post.setUser(usersDao.getById(1L));
-        emailSVC.prepareAndSend(post, "hello, this is a test.",
-                "Yup you tested it.");
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        post.setUser(user);
         postDao.save(post);
+//        emailService.prepareAndSend(post, "You created: " + post.getTitle(), post.getBody());
         return "redirect:/posts";
     }
 }
