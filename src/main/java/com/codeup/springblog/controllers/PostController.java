@@ -30,8 +30,14 @@ public class PostController {
 
     @GetMapping("/posts/{id}")
     public String singlePost(@PathVariable long id, Model model) {
-        model.addAttribute("post", postDao.getById(id));
-        return "posts/show";
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Post post = postDao.getById(id);
+        if (currentUser.getId() == post.getUser().getId()) {
+            model.addAttribute("post", postDao.getById(id));
+            return "posts/edit";
+        } else {
+            return "redirect:/posts/" + id;
+        }
     }
 
     @GetMapping("/posts/{id}/edit")
