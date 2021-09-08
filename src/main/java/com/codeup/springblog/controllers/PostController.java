@@ -30,7 +30,14 @@ public class PostController {
 
     @GetMapping("/posts/{id}")
     public String singlePost(@PathVariable long id, Model model) {
-        model.addAttribute("post", postDao.getById(id));
+        Post post = postDao.getById(id);
+        boolean isOwner = false;
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            isOwner = currentUser.getId() == post.getUser().getId();
+        }
+        model.addAttribute("post", post);
+        model.addAttribute("isPostOwner", isOwner);
         return "posts/show";
     }
 

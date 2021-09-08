@@ -49,4 +49,10 @@ public class AdController {
         adDao.save(ad);
         return "redirect:/ads";
     }
+
+    @PostMapping("ads/{id}/delete")
+    public String deleteAd (@PathVariable long id) {
+        adDao.delete((adDao.findById(id)));
+        return "redirect: /ads";
+    }
 }
